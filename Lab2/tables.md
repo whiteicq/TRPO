@@ -1,4 +1,3 @@
-# Добавить категории?
 # Права и Роли
 |ПРАВО/РОЛЬ                 |Пользователь|Модератор|
 |:-------------------------:|:----------:|:-------:|
@@ -63,8 +62,6 @@
 |description|VARCHAR(100)|NULL|Описание Новости|
 |content|CLOB|NOT NULL|Содержимое Новости|
 
-### мб контент в отдельную сущность? хз и еще как быть со множеством картинок в таблице Новости итд??
-
 ## Статьи (Articles)
 |Имя|Тип|Ограничения|Описание|
 |:-:|:-:|:---------:|:------:|
@@ -74,7 +71,6 @@
 |upload_date|DATE|NOT NULL|Дата добавления Статьи|
 |description|VARCHAR(100)|NULL|Описание Статьи|
 |content|CLOB|NOT NULL|Содержимое Статьи|
-|upload_date|DATE|NOT NULL|Дата добавления Статьи|
 
 ## Видео (Videos)
 |Имя|Тип|Ограничения|Описание|
@@ -82,8 +78,8 @@
 |id|INT|PK, UNIQUE, AUTO INCREMENT, NOT NULL|Первичный ключ Статьи|
 |category_id|INT|FK, NULL|Внешний ключ на Категорию|
 |title|VARCHAR(50)|NOT NULL|Название Статьи|
-|description|VARCHAR(100)|NULL|Описание Статьи|
 |upload_date|DATE|NOT NULL|Дата добавления Видео|
+|description|VARCHAR(100)|NULL|Описание Статьи|
 |video_file|BLOB|NOT NULL|Видео-файл (содержимое Видео)|
 
 ## Изображения (Images)
@@ -92,8 +88,8 @@
 |id|INT|PK, UNIQUE, AUTO INCREMENT, NOT NULL|Первичный ключ Статьи|
 |category_id|INT|FK, NULL|Внешний ключ на Категорию|
 |title|VARCHAR(50)|NOT NULL|Название Статьи|
-|description|VARCHAR(100)|NULL|Описание Статьи|
 |upload_date|DATE|NOT NULL|Дата добавления Изображения|
+|description|VARCHAR(100)|NULL|Описание Статьи|
 |image_file|BLOB|NOT NULL|файл (содержимое) Изображения|
 
 ## Калькуляторы (Calculators)
@@ -101,8 +97,8 @@
 |:-:|:-:|:---------:|:------:|
 |id|INT|PK, UNIQUE, AUTO INCREMENT, NOT NULL|Первичный ключ Калькулятора|
 |title|VARCHAR(50)|NOT NULL|Название Калькулятора|
-|description|VARCHAR(100)|NULL|Описание Калькулятора|
 |upload_date|DATE|NOT NULL|Дата добавления Калькулятора|
+|description|VARCHAR(100)|NULL|Описание Калькулятора|
 |content|CLOB|NOT NULL|Содержимое Калькулятора (в виде html-разметки или что-то вроде)|
 
 ## Логи (Logs)
@@ -118,12 +114,14 @@
 |имя поля|тип|ограничения|описание|
 |:------:|:-:|:---------:|:------:|
 |id|INT|PK, NOT NULL, AUTO INCREMENT, UNIQUE|Первичный ключ Избранного|
+|account_id|INT|FK, NOT NULL|Внешний ключ на Аккаунт, который добавляет себе избранные материалы|
 |upload_date|DATE|NOT NULL|Дата добавления Избранной записи|
 |new_id|INT|FK, NULL|Внешний ключ на Новость, которая добавлена в Избранное|
 |article_id|INT|FK, NULL|Внешний ключ на Статью, которая добавлена в Избранное|
 |image_id|INT|FK, NULL|Внешний ключ на Изображение, которая добавлена в Избранное|
 |video_id|INT|FK, NULL|Внешний ключ на Калькулятор, которая добавлена в Избранное|
-|calculator_id|INT||Внешний ключ на Калькулятор, которая добавлена в Избранное|
+|calculator_id|INT|FK, NULL|Внешний ключ на Калькулятор, которая добавлена в Избранное|
+
 ## Права (Permissions)
 |Имя|Тип|Ограничения|Описание|
 |:-:|:-:|:---------:|:------:|
@@ -139,11 +137,36 @@
 # Связи многие-ко-многим
 
 ## Роли и Права
+|Имя|Тип|Ограничения|Описание|
+|:-:|:-:|:---------:|:------:|
+|id|INT|PK, UNIQUE, AUTO INCREMENT, NOT NULL|Внешний ключ|
+|role_id|INT|FK, NOT NULL|Внешний ключ на Роль|
+|permission_id|INT|FK, NOT NULL|Внешний ключ на Право|
 
 ## Статьи и Видео
+|Имя|Тип|Ограничения|Описание|
+|:-:|:-:|:---------:|:------:|
+|id|INT|PK, UNIQUE, AUTO INCREMENT, NOT NULL|Внешний ключ|
+|article_id|INT|FK, NOT NULL|Внешний ключ на Статью|
+|video_id|INT|FK, NOT NULL|Внешний ключ на Видео|
 
 ## Статьи и Изображения 
+|Имя|Тип|Ограничения|Описание|
+|:-:|:-:|:---------:|:------:|
+|id|INT|PK, UNIQUE, AUTO INCREMENT, NOT NULL|Внешний ключ|
+|article_id|INT|FK, NOT NULL|Внешний ключ на Статью|
+|image_id|INT|FK, NOT NULL|Внешний ключ на Изображение|
 
 ## Новости и Видео 
+|Имя|Тип|Ограничения|Описание|
+|:-:|:-:|:---------:|:------:|
+|id|INT|PK, UNIQUE, AUTO INCREMENT, NOT NULL|Внешний ключ|
+|new_id|INT|FK, NOT NULL|Внешний ключ на Новость|
+|video_id|INT|FK, NOT NULL|Внешний ключ на Видео|
 
 ## Новости и Изображения
+|Имя|Тип|Ограничения|Описание|
+|:-:|:-:|:---------:|:------:|
+|id|INT|PK, UNIQUE, AUTO INCREMENT, NOT NULL|Внешний ключ|
+|new_id|INT|FK, NOT NULL|Внешний ключ на Новость|
+|image_id|INT|FK, NOT NULL|Внешний ключ на Изображение|
